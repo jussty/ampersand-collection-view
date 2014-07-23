@@ -31,7 +31,8 @@ _.extend(CollectionView.prototype, BBEvents, {
         });
     },
     _createViewForModel: function (model) {
-        var view = new this.view(_({model: model, collection: this.collection}).extend(this.viewOptions));
+        var viewOptions = _({model: model, collection: this.collection}).extend(this.viewOptions);
+        var view = typeof this.view !== 'function' ? new this.view(viewOptions) : this.view(viewOptions);
         this.views.push(view);
         view.parent = this;
         view.renderedByParentView = true;
@@ -47,7 +48,8 @@ _.extend(CollectionView.prototype, BBEvents, {
             return;
         }
         if (!view) {
-            view = new this.view(_({model: model, collection: this.collection}).extend(this.viewOptions));
+            var viewOptions = _({model: model, collection: this.collection}).extend(this.viewOptions);
+            view = typeof this.view !== 'function' ? new this.view(viewOptions) : this.view(viewOptions);
             this.views.push(view);
             view.parent = this;
             view.renderedByParentView = true;
